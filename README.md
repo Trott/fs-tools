@@ -1,23 +1,13 @@
 fs-tools
 ========
 
-Provides some everyday needed tools to work with FS missing in standard library.
-See [API Documentation][api-doc] for detailed info.
+Useful file utitiles. See [API Documentation](http://nodeca.github.com/fs-tools/FsTools/index.html) for detailed info.
 
+---
 
-Implemented methods
--------------------
+### walk(path, [pattern,] iterator[, callback])
 
-- [walk][]
-- [rm_rf][]
-- [mkdir_p][]
-- [copy][]
-
-
-Usage overview
---------------
-
-### walk(path, pattern, iterator[, callback])
+Recurcively scan files by regex pattern & apply iterator to each. Iterator applyed only to files, not to directories.
 
     fstools.walk('/home/nodeca', '\.yml$', function (path, stats, callback) {
       fs.readFile(path, 'utf-8', funtion (err, str) {
@@ -39,6 +29,8 @@ Usage overview
 
 ### rm_rf(path, callback)
 
+Recursively delete directory with all content.
+
     fstools.rm_rf('/home/nodeca/trash', function (err) {
       if (err) {
         console.log("U can't touch that");
@@ -51,6 +43,8 @@ Usage overview
     });
 
 ### mkdir_p(path, callback)
+
+Recursively make path.
 
     fstools.mkdir_p('/home/nodeca/media/xxx', function (err) {
       if (err) {
@@ -65,6 +59,8 @@ Usage overview
 
 ### copy(src, dst, callback)
 
+Copy file. Not optimized for big sourses (read all to memory at once).
+
     var src = '/home/nodeca/secrets.yml',
         dst = '/home/nodeca/very/deep/secrets/main.yml';
 
@@ -78,10 +74,3 @@ Usage overview
         process.exit(0);
       }
     });
-
-
-[api-doc]:  http://nodeca.github.com/fs-tools/FsTools/index.html
-[walk]:     http://nodeca.github.com/fs-tools/FsTools/walk/index.html
-[rm_rf]:    http://nodeca.github.com/fs-tools/FsTools/mkdir_p/index.html
-[mkdir_p]:  http://nodeca.github.com/fs-tools/FsTools/mkdir_p/index.html
-[copy]:     http://nodeca.github.com/fs-tools/FsTools/copy/index.html
