@@ -57,16 +57,16 @@ Recursively make path.
       }
     });
 
-### copy(src, dst, callback)
+### cp(src, dst, callback)
 
 Copy file. Not optimized for big sourses (read all to memory at once).
 
     var src = '/home/nodeca/secrets.yml',
         dst = '/home/nodeca/very/deep/secrets/main.yml';
 
-    fstools.copy(src, dst, function (err) {
+    fstools.cp(src, dst, function (err) {
       if (err) {
-        console.log("Failed copy " + src + " into " + dst);
+        console.log("Failed to copy " + src + " into " + dst);
         console.err(err);
         process.exit(1);
       } else {
