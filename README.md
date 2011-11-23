@@ -27,11 +27,11 @@ Recurcively scan files by regex pattern & apply iterator to each. Iterator apply
       console.log('Done!');
     });
 
-### rm_rf(path, callback)
+### remove(path, callback)
 
 Recursively delete directory with all content.
 
-    fstools.rm_rf('/home/nodeca/trash', function (err) {
+    fstools.remove('/home/nodeca/trash', function (err) {
       if (err) {
         console.log("U can't touch that");
         console.err(err);
@@ -42,11 +42,11 @@ Recursively delete directory with all content.
       }
     });
 
-### mkdir_p(path, callback)
+### mkdir(path, mode = '0755', callback)
 
 Recursively make path.
 
-    fstools.mkdir_p('/home/nodeca/media/xxx', function (err) {
+    fstools.mkdir('/home/nodeca/media/xxx', function (err) {
       if (err) {
         console.log("Can't' create directory");
         console.err(err);
@@ -57,14 +57,14 @@ Recursively make path.
       }
     });
 
-### cp(src, dst, callback)
+### copy(src, dst, callback)
 
 Copy file. Not optimized for big sourses (read all to memory at once).
 
     var src = '/home/nodeca/secrets.yml',
         dst = '/home/nodeca/very/deep/secrets/main.yml';
 
-    fstools.cp(src, dst, function (err) {
+    fstools.copy(src, dst, function (err) {
       if (err) {
         console.log("Failed to copy " + src + " into " + dst);
         console.err(err);
