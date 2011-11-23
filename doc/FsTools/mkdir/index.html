@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>fs-tools  v0.0.1-455d09b API documentation | FsTools.rm_rf</title>
+  <title>fs-tools  v0.0.1-426a816 API documentation | FsTools.mkdir</title>
   <meta name="generator" content="PDoc" />
   
   <script charset="utf-8" src="../../javascripts/pdoc/prototype.js" type="text/javascript"></script>
@@ -39,8 +39,8 @@
       
       <div class="sidebar-pane scrollable" id="menu_pane">
         <ul class="menu-items" id="api_menu"><li><div class="menu-item"><a class="namespace current-parent" href="../../FsTools/index.html" title="FsTools (namespace)">FsTools</a></div><ul><li><div class="menu-item"><a class="class-method" href="../../FsTools/copy/index.html" title="FsTools.copy (class method)">copy</a></div></li>
-<li><div class="menu-item"><a class="class-method" href="../../FsTools/mkdir_p/index.html" title="FsTools.mkdir_p (class method)">mkdir_p</a></div></li>
-<li><div class="menu-item"><a class="class-method current" href="../../FsTools/rm_rf/index.html" title="FsTools.rm_rf (class method)">rm_rf</a></div></li>
+<li><div class="menu-item"><a class="class-method current" href="../../FsTools/mkdir/index.html" title="FsTools.mkdir (class method)">mkdir</a></div></li>
+<li><div class="menu-item"><a class="class-method" href="../../FsTools/remove/index.html" title="FsTools.remove (class method)">remove</a></div></li>
 <li><div class="menu-item"><a class="class-method" href="../../FsTools/walk/index.html" title="FsTools.walk (class method)">walk</a></div></li></ul></li></ul><!--- #api_menu =-->
       </div> <!-- .sidebar-pane -->
       <div class="sidebar-pane" id="search_pane">
@@ -63,17 +63,17 @@
   
     <li>&rarr; <a href="../../FsTools/index.html" title="FsTools (namespace)">FsTools</a></li>
   
-    <li>&rarr; <a href="../../FsTools/rm_rf/index.html" title="FsTools.rm_rf (class method)">rm_rf</a></li>
+    <li>&rarr; <a href="../../FsTools/mkdir/index.html" title="FsTools.mkdir (class method)">mkdir</a></li>
   
 </ul>
 
 <h2 class="page-title">
-  <span class="type">class method</span> FsTools.rm_rf
+  <span class="type">class method</span> FsTools.mkdir
 </h2>
 
 
   
-  <p id="src_code_href"><a href="https://github.com/nodeca/fs-tools/blob/455d09b/lib/fs-tools.js#L256">View source on GitHub &rarr;</a></p>
+  <p id="src_code_href"><a href="https://github.com/nodeca/fs-tools/blob/426a816/lib/fs-tools.js#L401">View source on GitHub &rarr;</a></p>
 
 
 
@@ -86,45 +86,30 @@
   <div class="section-content">
     <div class="method-description">
       
-        <pre class="syntax"><code class="ebnf">FsTools.rm_rf(path, callback) &rarr; void</code></pre>
-
-  <ul class="argument-list">
-    
-      <li>
-        <code class="argument-name">path</code>
-        
-          <span class="argument-types">(<code>String</code>)</span>
-        
-         &ndash; Path to remove
-      </li>
-    
-      <li>
-        <code class="argument-name">callback</code>
-        
-          <span class="argument-types">(<code>Function</code>)</span>
-        
-         &ndash; Fired after path was removed
-      </li>
-    
-  </ul> <!-- .argument-list -->
+        <pre class="syntax"><code class="ebnf">FsTools.mkdir(path, mode, callback) &rarr; void<br />FsTools.mkdir(path, callback) &rarr; void</code></pre>
 
       
 
-      <p>Removes given <code>path</code>. If it was a directory will remove it recursively,
-similar to UNIX' <code>rm -rf &lt;path&gt;</code>. After all will fire <code>callback(err)</code> with
-an error if there were any.</p>
+      <ul>
+<li>path (String): Path to create</li>
+<li>mode (String|Number): Permission mode of new directory. See stdlib
+fs.mkdir for details. Default: '0755'.</li>
+<li>callback (Function): Fired after path was created</li>
+</ul>
 
-<p>If given <code>path</code> was file - will proxy call to <code>fs.unlink</code>.</p>
+<p>Creates given path, creating parents recursively if needed.
+Similar to UNIX' <code>mkdir -pf &lt;path&gt;</code>. After all will fire <code>callback(err)</code> with
+an error if there were any.</p>
 
 <h5>Example</h5>
 
-<div class="highlight"><pre><span class="nx">fstools</span><span class="p">.</span><span class="nx">rm_rf</span><span class="p">(</span><span class="s1">&#39;/home/nodeca/trash&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nx">fstools</span><span class="p">.</span><span class="nx">mkdir</span><span class="p">(</span><span class="s1">&#39;/home/nodeca/media/xxx&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;U can&#39;t touch that&quot;</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Can&#39;t&#39; create directory&quot;</span><span class="p">);</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">err</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
     <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;It&#39;s Hammer time&quot;</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;We can now store some romantic movies here&quot;</span><span class="p">);</span>
     <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">});</span>
@@ -144,10 +129,10 @@ an error if there were any.</p>
       </div> <!-- #main -->
       
       <div id="footer">
-        <p><a href="">fs-tools</a> v0.0.1-455d09b API documentation.</p>
+        <p><a href="">fs-tools</a> v0.0.1-426a816 API documentation.</p>
         <p>
           
-            Last updated on October 06, 2011 at 19:56 UTC.
+            Last updated on November 23, 2011 at 20:13 UTC.
           
           Generated by <a href="http://pdoc.org">PDoc</a>.
           Uses <a href="http://famfamfam.com/lab/icons/silk/" title="famfamfam.com: Silk Icons">Silk Icons</a> and portions of <a href="http://github.com/280north/aristo/tree/master" title="280north's aristo at master - GitHub">Aristo</a>.
