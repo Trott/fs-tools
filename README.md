@@ -74,3 +74,7 @@ Copy file. Not optimized for big sourses (read all to memory at once).
         process.exit(0);
       }
     });
+
+## License
+
+View the [LICENSE](https://github.com/nodeca/fs-tools/blob/master/LICENSE) file (MIT).
