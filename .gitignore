@@ -1,4 +1,5 @@
-/npm-debug.log
+/doc/
 /node_modules/
 *.swp
 *.pdoc.yaml
+*.log

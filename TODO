@@ -1,0 +1,2 @@
+* Replace homebrew tester with Vows
+* Add travis-ci support

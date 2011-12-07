@@ -23,6 +23,7 @@ function dropSandbox(name, cb) {
 
 function reportError(err) {
   console.error(err.stack || err.message || err.toString());
+  process.exit(1);
 }
 
 
