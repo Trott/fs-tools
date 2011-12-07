@@ -6,6 +6,9 @@ TMP_PATH    := /tmp/${PROJECT}-$(shell date +%s)
 REMOTE_NAME ?= origin
 REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
+CURR_HEAD 	:= $(firstword $(shell git show-ref --hash HEAD | cut --bytes=-6) master)
+GITHUB_NAME := nodeca/fs-tools
+SRC_URL_FMT := https://github.com/${GITHUB_NAME}/blob/${CURR_HEAD}/{file}\#L{line}
 
 test:
 	NODE_ENV=test node ./test/run.js
@@ -27,7 +30,8 @@ doc:
 		echo "  $ npm install ndoc" >&2 ; \
 		exit 128 ; \
 		fi
-	ndoc -o ./doc ./lib
+	rm -rf ./doc
+	ndoc --output ./doc --linkFormat "${SRC_URL_FMT}" ./lib
 
 dev-deps:
 	@if test ! `which npm` ; then \
@@ -58,5 +62,5 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-.PHONY: test dev-deps gh-pages todo
+.PHONY: test doc dev-deps gh-pages todo
 .SILENT: test doc todo
