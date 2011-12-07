@@ -1,7 +1,7 @@
 fs-tools
 ========
 
-Useful file utitiles. See [API Documentation](http://nodeca.github.com/fs-tools/FsTools/index.html) for detailed info.
+Useful file utitiles. See [API Documentation](http://nodeca.github.com/fs-tools/#FsTools) for detailed info.
 
 ---
 
