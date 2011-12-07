@@ -13,7 +13,7 @@ SRC_URL_FMT := https://github.com/${GITHUB_NAME}/blob/${CURR_HEAD}/{file}\#L{lin
 test:
 	NODE_ENV=test node ./test/run.js
 
-lint: dev-deps
+lint:
 	@if test ! `which jslint` ; then \
 		echo "You need 'jslint' installed in order to generate docs." >&2 ; \
 		echo "  $ make dev-deps" >&2 ; \
