@@ -10,12 +10,9 @@ CURR_HEAD 	:= $(firstword $(shell git show-ref --hash HEAD | cut --bytes=-6) mas
 GITHUB_NAME := nodeca/fs-tools
 SRC_URL_FMT := https://github.com/${GITHUB_NAME}/blob/${CURR_HEAD}/{file}\#L{line}
 
-test:
-	NODE_ENV=test node ./test/run.js
-
 lint:
 	@if test ! `which jslint` ; then \
-		echo "You need 'jslint' installed in order to generate docs." >&2 ; \
+		echo "You need 'jslint' installed in order to run lint." >&2 ; \
 		echo "  $ make dev-deps" >&2 ; \
 		exit 128 ; \
 		fi
@@ -23,6 +20,14 @@ lint:
 	# (indent)  -> indentation level (2 spaces)
 	# (nomen)   -> tolerate underscores in identifiers (e.g. `var _val = 1`)
 	jslint --node --nomen --indent=2 ./lib/*.js
+
+test: lint
+	@if test ! `which vows` ; then \
+		echo "You need 'vows' installed in order to run tests." >&2 ; \
+		echo "  $ make dev-deps" >&2 ; \
+		exit 128 ; \
+		fi
+	NODE_ENV=test vows --spec
 
 doc:
 	@if test ! `which ndoc` ; then \
