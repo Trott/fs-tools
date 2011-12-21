@@ -30,17 +30,10 @@ test: lint
 		echo "  $ make dev-deps" >&2 ; \
 		exit 128 ; \
 	fi
-	rm -fr sandbox
-	mkdir -p sandbox/foo/bar/baz
-	touch sandbox/foo/bar/baz/file
-	touch sandbox/foo/bar/file
-	touch sandbox/foo/file
-	touch sandbox/file
-	ln -s ../../.. sandbox/foo/bar/baz/link
-	ln -s ../.. sandbox/foo/bar/link
-	ln -s .. sandbox/foo/link
-	ln -s . sandbox/link
-	NODE_ENV=test vows tests/walk.js tests/copy.js tests/mkdir.js tests/remove.js --spec
+	rm -rf ./tmp/sandbox
+	mkdir -p ./tmp/sandbox
+	tar xpzf ./test/sandbox-template.tar.gz -C ./tmp/sandbox
+	NODE_ENV=test vows --spec
 
 doc:
 	@if test ! `which ndoc` ; then \
