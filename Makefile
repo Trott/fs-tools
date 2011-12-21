@@ -29,8 +29,18 @@ test: lint
 		echo "You need 'vows' installed in order to run tests." >&2 ; \
 		echo "  $ make dev-deps" >&2 ; \
 		exit 128 ; \
-		fi
-	NODE_ENV=test vows --spec
+	fi
+	rm -fr sandbox
+	mkdir -p sandbox/foo/bar/baz
+	touch sandbox/foo/bar/baz/file
+	touch sandbox/foo/bar/file
+	touch sandbox/foo/file
+	touch sandbox/file
+	ln -s ../../.. sandbox/foo/bar/baz/link
+	ln -s ../.. sandbox/foo/bar/link
+	ln -s .. sandbox/foo/link
+	ln -s . sandbox/link
+	NODE_ENV=test vows tests/walk.js tests/copy.js tests/mkdir.js tests/remove.js --spec
 
 doc:
 	@if test ! `which ndoc` ; then \
