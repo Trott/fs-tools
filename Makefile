@@ -24,15 +24,29 @@ lint:
 	# (nomen)   -> tolerate underscores in identifiers (e.g. `var _val = 1`)
 	jslint --node --nomen --indent=2 ${JS_FILES}
 
+sandbox:
+	rm -rf ./tmp/${SANDBOX}
+	mkdir -p ./tmp/${SANDBOX}/foo/bar/baz
+	cd ./tmp/${SANDBOX} \
+		&& touch foo/bar/baz/file \
+		&& touch foo/bar/file \
+		&& touch foo/file \
+		&& touch file \
+		&& ln -s ../../.. foo/bar/baz/link \
+		&& ln -s ../.. foo/bar/link \
+		&& ln -s .. foo/link \
+		&& ln -s . link
+
 test: lint
 	@if test ! `which vows` ; then \
 		echo "You need 'vows' installed in order to run tests." >&2 ; \
 		echo "  $ make dev-deps" >&2 ; \
 		exit 128 ; \
 	fi
-	rm -rf ./tmp/sandbox
-	mkdir -p ./tmp/sandbox
-	tar xpzf ./test/sandbox-template.tar.gz -C ./tmp/sandbox
+	$(MAKE) sandbox SANDBOX=sandbox/copy
+	$(MAKE) sandbox SANDBOX=sandbox/mkdir
+	$(MAKE) sandbox SANDBOX=sandbox/remove
+	$(MAKE) sandbox SANDBOX=sandbox/walk
 	NODE_ENV=test vows --spec
 
 doc:
@@ -73,5 +87,5 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-.PHONY: test doc dev-deps gh-pages todo
-.SILENT: test doc todo
+.PHONY: sandbox test doc dev-deps gh-pages todo
+.SILENT: sandbox test doc todo
