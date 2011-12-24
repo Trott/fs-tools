@@ -24,29 +24,17 @@ lint:
 	# (nomen)   -> tolerate underscores in identifiers (e.g. `var _val = 1`)
 	jslint --node --nomen --indent=2 ${JS_FILES}
 
-sandbox:
-	rm -rf ./tmp/${SANDBOX}
-	mkdir -p ./tmp/${SANDBOX}/foo/bar/baz
-	cd ./tmp/${SANDBOX} \
-		&& touch foo/bar/baz/file \
-		&& touch foo/bar/file \
-		&& touch foo/file \
-		&& touch file \
-		&& ln -s ../../.. foo/bar/baz/link \
-		&& ln -s ../.. foo/bar/link \
-		&& ln -s .. foo/link \
-		&& ln -s . link
-
 test: lint
 	@if test ! `which vows` ; then \
 		echo "You need 'vows' installed in order to run tests." >&2 ; \
 		echo "  $ make dev-deps" >&2 ; \
 		exit 128 ; \
 	fi
-	$(MAKE) sandbox SANDBOX=sandbox/copy
-	$(MAKE) sandbox SANDBOX=sandbox/mkdir
-	$(MAKE) sandbox SANDBOX=sandbox/remove
-	$(MAKE) sandbox SANDBOX=sandbox/walk
+	rm -rf ./tmp/sandbox && mkdir -p ./tmp/sandbox
+	cp -r ./support/sandbox-template ./tmp/sandbox/copy
+	cp -r ./support/sandbox-template ./tmp/sandbox/mkdir
+	cp -r ./support/sandbox-template ./tmp/sandbox/remove
+	cp -r ./support/sandbox-template ./tmp/sandbox/walk
 	NODE_ENV=test vows --spec
 
 doc:
