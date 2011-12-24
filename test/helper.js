@@ -1,6 +1,7 @@
 'use strict';
 
 
+var Path = require('path');
 var Assert = require('assert');
 var Helper = module.exports = {};
 
@@ -45,4 +46,16 @@ Assert.hasPermsMode = function hasPermsMode(stats, expected, msg) {
   var result = stats.mode.toString(8).slice(-4);
   msg = msg || "Expected '" + expected + "' mode, but got '" + result + "'.";
   Assert.ok(expected === result, msg);
+};
+
+
+Assert.pathExists = function pathExists(path, msg) {
+  msg = msg || "Expect path '" + path + "' to exist.";
+  Assert.ok(Path.existsSync(path), msg);
+};
+
+
+Assert.pathNotExists = function pathNotExists(path, msg) {
+  msg = msg || "Doe not expect path '" + path + "' to exist.";
+  Assert.ok(!Path.existsSync(path), msg);
 };
