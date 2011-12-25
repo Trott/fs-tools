@@ -1,3 +1,6 @@
+'use strict';
+
+
 var FsTools = require('../');
 var Helper = require('./helper');
 var Assert = require('assert');
@@ -45,7 +48,7 @@ require('vows').describe('copy()').addBatch({
         });
       },
       'makes shallow copy of src': function (err, result) {
-        Assert.ok(!err, 'Has no error')
+        Assert.ok(!err, 'Has no error');
         Assert.equal(result.total, 20);
         Assert.equal(result.files, 7);
         Assert.equal(result.dirs, 6);
@@ -53,5 +56,4 @@ require('vows').describe('copy()').addBatch({
       },
     },
   },
-})
-.export(module)
+}).export(module);

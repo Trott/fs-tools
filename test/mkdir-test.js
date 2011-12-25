@@ -1,3 +1,6 @@
+'use strict';
+
+
 var FsTools = require('../');
 var Helper = require('./helper');
 var Assert = require('assert');

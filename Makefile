@@ -10,7 +10,7 @@ CURR_HEAD 	:= $(firstword $(shell git show-ref --hash HEAD | cut --bytes=-6) mas
 GITHUB_NAME := nodeca/fs-tools
 SRC_URL_FMT := https://github.com/${GITHUB_NAME}/blob/${CURR_HEAD}/{file}\#L{line}
 
-JS_FILES 	:= $(shell find ./lib -type f -name '*.js' -print)
+JS_FILES 		:= $(shell find ./lib ./test -type f -name '*.js' -print)
 
 
 lint:

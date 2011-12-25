@@ -1,3 +1,6 @@
+'use strict';
+
+
 var FsTools = require('../');
 var Helper = require('./helper');
 var Assert = require('assert');
@@ -20,7 +23,7 @@ require('vows').describe('walk()').addBatch({
         }
 
         next();
-      }, function(err) {
+      }, function (err) {
         callback(err, result);
       });
     },
@@ -28,7 +31,7 @@ require('vows').describe('walk()').addBatch({
       Assert.ok(!err, 'Has no errors');
     },
     'calls iterator on all entries': function (err, result) {
-      Assert.equal(result.files + result.symlinks, 8)
+      Assert.equal(result.files + result.symlinks, 8);
     },
     'provides lstats info': function (err, result) {
       Assert.equal(result.files, 4);

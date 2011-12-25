@@ -21,16 +21,17 @@ function getPathType(stats) {
   var fn;
 
   if (!stats || 'object' !== typeof stats) {
-    throw Error('Stats object required');
+    throw new Error('Stats object required');
   }
 
+  /*jslint forin:true*/
   for (fn in fns2type) {
     if ('function' === typeof stats[fn] && stats[fn]()) {
       return fns2type[fn];
     }
   }
 
-  throw Error('Expected valid stats object');
+  throw new Error('Expected valid stats object');
 }
 
 Object.getOwnPropertyNames(fns2type).forEach(function (fn) {
