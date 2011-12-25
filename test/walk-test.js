@@ -12,8 +12,10 @@ require('vows').describe('walk()').addBatch({
     topic: function () {
       var callback = this.callback, result;
 
-      result = { files: 0, symlinks: 0 };
+      result = { total: 0, files: 0, symlinks: 0 };
       FsTools.walk(SANDBOX, function (path, stats, next) {
+        result.total += 1;
+
         if (stats.isFile()) {
           result.files += 1;
         }
@@ -31,7 +33,7 @@ require('vows').describe('walk()').addBatch({
       Assert.ok(!err, 'Has no errors');
     },
     'calls iterator on all entries': function (err, result) {
-      Assert.equal(result.files + result.symlinks, 8);
+      Assert.equal(result.total, 8);
     },
     'provides lstats info': function (err, result) {
       Assert.equal(result.files, 4);
