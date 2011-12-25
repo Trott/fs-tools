@@ -57,7 +57,5 @@ require('vows').describe('walk()').addBatch({
       Assert.ok(!err, 'Has no errors');
       Assert.equal(result, 4);
     }
-  },
-
-  'behaves like GNU find': 'TBD',
+  }
 }).export(module);
