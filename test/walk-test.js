@@ -41,6 +41,23 @@ require('vows').describe('walk()').addBatch({
     }
   },
 
-  'behaves like /bin/find': 'TBD',
-  'walking through directory with given file mask': 'TBD'
+  'walking through directory with pattern': {
+    topic: function () {
+      var callback = this.callback, result;
+
+      result = 0;
+      FsTools.walk(SANDBOX, /file$/, function (path, stats, next) {
+        result += 1;
+        next();
+      }, function (err) {
+        callback(err, result);
+      });
+    },
+    'calls itertor on matching entries only': function (err, result) {
+      Assert.ok(!err, 'Has no errors');
+      Assert.equal(result, 4);
+    }
+  },
+
+  'behaves like GNU find': 'TBD',
 }).export(module);
