@@ -1,7 +1,5 @@
 var FsTools = require('../');
 var Helper = require('./helper');
-var Fs = require('fs');
-var Path = require('path');
 var Assert = require('assert');
 
 var SANDBOX = Helper.SANDBOX_DIR + '/remove';
