@@ -10,26 +10,23 @@ CURR_HEAD 	:= $(firstword $(shell git show-ref --hash HEAD | cut --bytes=-6) mas
 GITHUB_NAME := nodeca/fs-tools
 SRC_URL_FMT := https://github.com/${GITHUB_NAME}/blob/${CURR_HEAD}/{file}\#L{line}
 
-JS_FILES    := $(shell find ./lib ./test -type f -name '*.js' -print)
 
+test-all: lint test
 
 lint:
-	@if test ! `which jslint` ; then \
-		echo "You need 'jslint' installed in order to run lint." >&2 ; \
+	if test ! `which jshint` ; then \
+		echo "You need 'jshint' installed in order to run lint." >&2 ; \
 		echo "  $ make dev-deps" >&2 ; \
 		exit 128 ; \
 		fi
-	# (node)    -> Node.JS compatibility mode
-	# (indent)  -> indentation level (2 spaces)
-	# (nomen)   -> tolerate underscores in identifiers (e.g. `var _val = 1`)
-	jslint --node --nomen --indent=2 ./index.js ${JS_FILES}
+	jshint . --show-non-errors
 
-test: lint
+test:
 	@if test ! `which vows` ; then \
 		echo "You need 'vows' installed in order to run tests." >&2 ; \
 		echo "  $ make dev-deps" >&2 ; \
 		exit 128 ; \
-	fi
+		fi
 	rm -rf ./tmp/sandbox && mkdir -p ./tmp/sandbox
 	cp -r ./support/sandbox-template ./tmp/sandbox/copy
 	cp -r ./support/sandbox-template ./tmp/sandbox/mkdir
@@ -52,6 +49,7 @@ dev-deps:
 		echo "  See: http://npmjs.org/" >&2 ; \
 		exit 128 ; \
 		fi
+	npm install jshint -g
 	npm install --dev
 
 gh-pages:
@@ -75,5 +73,5 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-.PHONY: sandbox test doc dev-deps gh-pages todo
-.SILENT: sandbox test doc todo
+.PHONY: lint test doc dev-deps gh-pages todo
+.SILENT: lint test doc todo
