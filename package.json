@@ -1,6 +1,6 @@
 {
   "name"            : "fs-tools",
-  "version"         : "0.1.0",
+  "version"         : "0.1.1",
   "description"     : "fs helper utilities (walk, copy, mkdir -p)",
   "keywords"        : ["fs", "file", "utils"],
   "homepage"        : "https://github.com/nodeca/fs-tools",
