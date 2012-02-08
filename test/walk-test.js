@@ -57,5 +57,22 @@ require('vows').describe('walk()').addBatch({
       Assert.ok(!err, 'Has no errors');
       Assert.equal(result, 4);
     }
+  },
+
+  'walking silently skip directories that does not exists': {
+    topic: function () {
+      var callback = this.callback, result = 0;
+
+      FsTools.walk(SANDBOX + '/SHoUldNotExists', function (path, stats, next) {
+        result += 1;
+        next();
+      }, function (err) {
+        callback(err, result);
+      });
+    },
+    '': function (err, result) {
+      Assert.ok(!err, 'Has no errors');
+      Assert.equal(result, 0);
+    }
   }
 }).export(module);
