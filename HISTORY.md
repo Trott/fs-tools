@@ -1,3 +1,9 @@
+0.2.0 / 2012-02-08
+------------------
+
+* Fixed bug with fstools.copy() dst directory creation.
+* Simplified code.
+
 0.1.1 / 2012-02-06
 ------------------
 
