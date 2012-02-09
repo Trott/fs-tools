@@ -59,7 +59,7 @@ require('vows').describe('walk()').addBatch({
     }
   },
 
-  'walking silently skip directories that does not exists': {
+  'walking through the directory that does not exists': {
     topic: function () {
       var callback = this.callback, result = 0;
 
@@ -70,7 +70,7 @@ require('vows').describe('walk()').addBatch({
         callback(err, result);
       });
     },
-    '': function (err, result) {
+    'silently skipped': function (err, result) {
       Assert.ok(!err, 'Has no errors');
       Assert.equal(result, 0);
     }
