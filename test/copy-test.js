@@ -55,5 +55,31 @@ require('vows').describe('copy()').addBatch({
         Assert.equal(result.syms, 7);
       },
     },
-  },
+  }
+}).addBatch({
+  'When copying to existing file/dir': {
+    topic: function () {
+      FsTools.copy(SANDBOX + '/fuu/bar', SANDBOX + '/foo', this.callback);
+    },
+
+    'files are overwriten': function (err) {
+      var dst, src, result, expected, message;
+
+      dst       = SANDBOX + '/foo/file';
+      src       = SANDBOX + '/fuu/bar/file';
+      result    = Fs.readFileSync(dst, 'utf8');
+      expected  = Fs.readFileSync(src, 'utf8');
+      message   = "Expected file '" + dst + "' to be same as '" + src + "'.";
+
+      Assert.ok(!err, 'Has no error');
+      Assert.equal(result, expected, message);
+    },
+
+    'links are overwriten': 'TBD',
+
+    'directories are merged': function (err) {
+      Assert.pathExists(SANDBOX + '/foo/baz');
+      Assert.isDirectory(Fs.statSync(SANDBOX + '/foo/baz'));
+    }
+  }
 }).export(module);
