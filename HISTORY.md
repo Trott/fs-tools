@@ -1,3 +1,8 @@
+0.2.1 / 2012-02-09
+------------------
+
+* Fixed bug with copying over existing dir/file
+
 0.2.0 / 2012-02-08
 ------------------
 
