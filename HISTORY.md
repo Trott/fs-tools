@@ -1,3 +1,8 @@
+0.2.2 / In development
+----------------------
+
+* Update API to be 0.8 compatible with shims for 0.6
+
 0.2.1 / 2012-02-09
 ------------------
 
