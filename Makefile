@@ -41,6 +41,7 @@ test: lint
 	cp -r ./support/sandbox-template ./tmp/sandbox/copy
 	cp -r ./support/sandbox-template ./tmp/sandbox/mkdir
 	cp -r ./support/sandbox-template ./tmp/sandbox/remove
+	cp -r ./support/sandbox-template ./tmp/sandbox/remove-sync
 	cp -r ./support/sandbox-template ./tmp/sandbox/walk
 	NODE_ENV=test vows --spec
 
