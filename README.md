@@ -24,7 +24,17 @@ Recursively make path.
 
 ### copy(src, dst, callback)
 
-Copy file. Not optimized for big sourses (read all to memory at once).
+Copy file.
+
+
+### move(src, dst, callback)
+
+Move file.
+
+
+### tmpdir([template])
+
+Returns unique directory (at the moment of request) pathbname.
 
 
 ## License
