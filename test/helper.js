@@ -58,6 +58,6 @@ Assert.pathExists = function pathExists(path, msg) {
 
 
 Assert.pathNotExists = function pathNotExists(path, msg) {
-  msg = msg || "Doe not expect path '" + path + "' to exist.";
+  msg = msg || "Does not expect path '" + path + "' to exist.";
   Assert.ok(!Fs.existsSync(path), msg);
 };

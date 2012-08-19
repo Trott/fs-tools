@@ -43,6 +43,7 @@ test: lint
 	cp -r ./support/sandbox-template ./tmp/sandbox/remove
 	cp -r ./support/sandbox-template ./tmp/sandbox/remove-sync
 	cp -r ./support/sandbox-template ./tmp/sandbox/walk
+	cp -r ./support/sandbox-template ./tmp/sandbox/move
 	NODE_ENV=test vows --spec
 
 doc:

@@ -6,14 +6,16 @@ var Helper = require('./helper');
 var Assert = require('assert');
 var Fs = require('fs');
 
-var SANDBOX = Helper.SANDBOX_DIR + '/copy';
 
-require('vows').describe('copy()').addBatch({
-  'copying foo to fuu': {
+var SANDBOX = Helper.SANDBOX_DIR + '/move';
+
+
+require('vows').describe('move()').addBatch({
+  'moving foo to fuu': {
     topic: function () {
       var callback = this.callback;
 
-      FsTools.copy(SANDBOX + '/foo', SANDBOX + '/fuu', function (err) {
+      FsTools.move(SANDBOX + '/foo', SANDBOX + '/fuu', function (err) {
         callback(err, SANDBOX + '/fuu');
       });
     },
@@ -32,6 +34,9 @@ require('vows').describe('copy()').addBatch({
     'creates symlink fuu/bar/baz/link pointing to directory': function (err, dst) {
       Assert.isDirectory(Fs.statSync(dst + '/bar/baz/link'));
     },
+    'removes foo': function (err, dst) {
+      Assert.pathNotExists(SANDBOX + '/foo');
+    },
     'after all': {
       topic: function () {
         var callback = this.callback, find;
@@ -47,17 +52,17 @@ require('vows').describe('copy()').addBatch({
           });
         });
       },
-      'makes exact copy of src': function (err, result) {
+      'fuu has exactly same structure': function (err, result) {
         Assert.ok(!err, 'Has no error');
-        Assert.equal(result.total, 20);
-        Assert.equal(result.files, 7);
-        Assert.equal(result.dirs, 6);
-        Assert.equal(result.syms, 7);
+        Assert.equal(result.total, 11);
+        Assert.equal(result.files, 4);
+        Assert.equal(result.dirs, 3);
+        Assert.equal(result.syms, 4);
       },
     },
   }
 }).addBatch({
-  'When copying to existing file/dir': {
+  'When moving to existing file/dir': {
     topic: function () {
       FsTools.copy(SANDBOX + '/fuu/bar', SANDBOX + '/foo', this.callback);
     },
