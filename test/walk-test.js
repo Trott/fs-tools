@@ -74,5 +74,51 @@ require('vows').describe('walk()').addBatch({
       Assert.ok(!err, 'Has no errors');
       Assert.equal(result, 0);
     }
-  }
+  },
+
+  'walking through the file': {
+    topic: function () {
+      var callback = this.callback, result;
+
+      result = { total: 0, files: 0, symlinks: 0 };
+      FsTools.walk(SANDBOX + '/file', function (path, stats, next) {
+        result.total += 1;
+
+        if (stats.isFile()) {
+          result.files += 1;
+        }
+
+        if (stats.isSymbolicLink()) {
+          result.symlinks += 1;
+        }
+
+        next();
+      }, function (err) {
+        callback(err, result);
+      });
+    },
+    'calls iterator on exactly one file': function (err, result) {
+      Assert.ok(!err, 'Has no errors');
+      Assert.equal(result.total, 1);
+      Assert.equal(result.files, 1);
+      Assert.equal(result.symlinks, 0);
+    }
+  },
+
+  'walking through the file with pattern': {
+    topic: function () {
+      var callback = this.callback, result = 0;
+
+      FsTools.walk(SANDBOX + '/file', /link$/, function (path, stats, next) {
+        result++;
+        next();
+      }, function (err) {
+        callback(err, result);
+      });
+    },
+    'respects given pattern': function (err, result) {
+      Assert.ok(!err, 'Has no errors');
+      Assert.equal(result, 0);
+    }
+  },
 }).export(module);
