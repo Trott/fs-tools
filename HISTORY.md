@@ -1,3 +1,9 @@
+0.2.5 / 2012-08-21
+------------------
+
+* Allows call FsTools.walk() with pathname pointing file.
+
+
 0.2.4 / 2012-08-19
 ------------------
 

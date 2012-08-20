@@ -9,7 +9,8 @@ Useful file utitiles. See [API Documentation](http://nodeca.github.com/fs-tools/
 ### walk(path, [pattern,] iterator[, callback])
 
 Recurcively scan files by regex pattern & apply iterator to each. Iterator
-applied only to files, not to directories.
+applied only to files, not to directories. If given path is a file, iterator
+will be called against it (if pattern allows it).
 
 
 ### remove(path, callback)
