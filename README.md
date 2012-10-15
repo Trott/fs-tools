@@ -13,6 +13,11 @@ applied only to files, not to directories. If given path is a file, iterator
 will be called against it (if pattern allows it).
 
 
+### findSorted(path, [pattern,] callback)
+
+Recursively collects files by regex pattern (if given, all files otherwise).
+
+
 ### remove(path, callback)
 
 Recursively delete directory with all content.
