@@ -44,6 +44,7 @@ test: lint
 	cp -r ./support/sandbox-template ./tmp/sandbox/remove-sync
 	cp -r ./support/sandbox-template ./tmp/sandbox/walk
 	cp -r ./support/sandbox-template ./tmp/sandbox/move
+	cp -r ./support/sandbox-template ./tmp/sandbox/find-sorted
 	NODE_ENV=test vows --spec
 
 doc:
