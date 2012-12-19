@@ -32,6 +32,7 @@ require('vows').describe('mkdir()').addBatch({
       FsTools.mkdir('/FOOBAR-FS-TOOLS', this.callback);
     },
     'can\'t create under /etc': function (err, result) {
+      result = result; // ugly workaround for jshint + vows
       Assert.instanceOf(err, Error);
       Assert.equal(err.code, 'EACCES');
     }

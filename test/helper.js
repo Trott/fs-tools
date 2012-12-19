@@ -2,7 +2,6 @@
 
 
 var Fs = require('fs');
-var Path = require('path');
 var Assert = require('assert');
 var Helper = module.exports = {};
 

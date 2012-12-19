@@ -10,7 +10,6 @@ var SANDBOX = Helper.SANDBOX_DIR + '/find-sorted';
 require('vows').describe('findSorted()').addBatch({
   'found files in deirectory': {
     topic: function () {
-      var cb = this.callback;
       FsTools.findSorted(SANDBOX, this.callback);
     },
 

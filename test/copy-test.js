@@ -18,6 +18,7 @@ require('vows').describe('copy()').addBatch({
       });
     },
     'should just work': function (err, dst) {
+      dst = dst; // ugly workaround for jshint + vows
       Assert.ok(!err, 'Has no errror');
     },
     'creates directory fuu': function (err, dst) {
@@ -78,6 +79,7 @@ require('vows').describe('copy()').addBatch({
     'links are overwriten': 'TBD',
 
     'directories are merged': function (err) {
+      err = err; // ugly workaround for jshint + vows
       Assert.pathExists(SANDBOX + '/foo/baz');
       Assert.isDirectory(Fs.statSync(SANDBOX + '/foo/baz'));
     }

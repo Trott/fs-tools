@@ -30,6 +30,7 @@ require('vows').describe('walk()').addBatch({
       });
     },
     'finishes without errors': function (err, result) {
+      result = result; // ugly workaround for jshint + vows
       Assert.ok(!err, 'Has no errors');
     },
     'calls iterator on all entries': function (err, result) {

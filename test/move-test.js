@@ -20,6 +20,7 @@ require('vows').describe('move()').addBatch({
       });
     },
     'should just work': function (err, dst) {
+      dst = dst; // ugly workaround for jshint + vows
       Assert.ok(!err, 'Has no errror');
     },
     'creates directory fuu': function (err, dst) {
@@ -35,6 +36,7 @@ require('vows').describe('move()').addBatch({
       Assert.isDirectory(Fs.statSync(dst + '/bar/baz/link'));
     },
     'removes foo': function (err, dst) {
+      dst = dst; // ugly workaround for jshint + vows
       Assert.pathNotExists(SANDBOX + '/foo');
     },
     'after all': {
@@ -83,6 +85,7 @@ require('vows').describe('move()').addBatch({
     'links are overwriten': 'TBD',
 
     'directories are merged': function (err) {
+      err = err; // ugly workaround for jshint + vows
       Assert.pathExists(SANDBOX + '/foo/baz');
       Assert.isDirectory(Fs.statSync(SANDBOX + '/foo/baz'));
     }
