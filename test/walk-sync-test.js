@@ -39,7 +39,7 @@ require('vows').describe('walk()').addBatch({
     topic: function () {
       var result = 0;
 
-      FsTools.walkSync(SANDBOX, /file$/, function (path, stats) {
+      FsTools.walkSync(SANDBOX, /file$/, function (/*path, stats */) {
         result += 1;
       });
 
@@ -54,7 +54,7 @@ require('vows').describe('walk()').addBatch({
     topic: function () {
       var result = 0;
 
-      FsTools.walkSync(SANDBOX + '/SHoUldNotExists', function (path, stats) {
+      FsTools.walkSync(SANDBOX + '/SHoUldNotExists', function (/*path, stats*/) {
         result += 1;
       });
 
@@ -94,7 +94,7 @@ require('vows').describe('walk()').addBatch({
     topic: function () {
       var result = 0;
 
-      FsTools.walkSync(SANDBOX + '/file', /link$/, function (path, stats) {
+      FsTools.walkSync(SANDBOX + '/file', /link$/, function (/*path, stats*/) {
         result++;
       });
 
