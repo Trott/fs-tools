@@ -1,3 +1,9 @@
+0.2.9 / 2013-02-17
+------------------
+
+* Better tmpdir support - shoud be ok on Win for node 0.8+
+
+
 0.2.8 / 2013-01-08
 ------------------
 
