@@ -1,3 +1,9 @@
+0.2.10 / 2013-03-15
+-------------------
+
+* Fixed possible callback duplication, if error happens on internal file copy
+
+
 0.2.9 / 2013-02-17
 ------------------
 
