@@ -12,6 +12,10 @@ Recurcively scan files by regex pattern & apply iterator to each. Iterator
 applied only to files, not to directories. If given path is a file, iterator
 will be called against it (if pattern allows it).
 
+### walkSync(path, [pattern,] iterator)
+
+Sync version of walk(). Throws exception on error.
+
 
 ### findSorted(path, [pattern,] callback)
 
@@ -22,10 +26,18 @@ Recursively collects files by regex pattern (if given, all files otherwise).
 
 Recursively delete directory with all content.
 
+### removeSync(path)
+
+Sync version of remove(). Throws exception on error.
+
 
 ### mkdir(path, mode = '0755', callback)
 
 Recursively make path.
+
+### mkdirSync(path, mode = '0755')
+
+Sync version of mkdir(). Throws exception on error.
 
 
 ### copy(src, dst, callback)
