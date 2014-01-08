@@ -70,7 +70,7 @@ require('vows').describe('copy()').addBatch({
       src       = SANDBOX + '/fuu/bar/file';
       result    = Fs.readFileSync(dst, 'utf8');
       expected  = Fs.readFileSync(src, 'utf8');
-      message   = "Expected file '" + dst + "' to be same as '" + src + "'.";
+      message   = 'Expected file `' + dst + '` to be same as `' + src + '`.';
 
       Assert.ok(!err, 'Has no error');
       Assert.equal(result, expected, message);

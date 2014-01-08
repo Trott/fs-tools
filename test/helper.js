@@ -37,7 +37,7 @@ function getPathType(stats) {
 Object.getOwnPropertyNames(fns2type).forEach(function (fn) {
   Assert[fn] = function (stats, msg) {
     var expected = fns2type[fn], result = getPathType(stats);
-    msg = msg || "Expected '" + expected + "' but got '" + result + "'.";
+    msg = msg || 'Expected `' + expected + '` but got `' + result + '`.';
     Assert.ok(expected === result, msg);
   };
 });
@@ -45,18 +45,18 @@ Object.getOwnPropertyNames(fns2type).forEach(function (fn) {
 
 Assert.hasPermsMode = function hasPermsMode(stats, expected, msg) {
   var result = stats.mode.toString(8).slice(-4);
-  msg = msg || "Expected '" + expected + "' mode, but got '" + result + "'.";
+  msg = msg || 'Expected `' + expected + '` mode, but got `' + result + '`.';
   Assert.ok(expected === result, msg);
 };
 
 
 Assert.pathExists = function pathExists(path, msg) {
-  msg = msg || "Expect path '" + path + "' to exist.";
+  msg = msg || 'Expect path `' + path + '` to exist.';
   Assert.ok(Fs.existsSync(path), msg);
 };
 
 
 Assert.pathNotExists = function pathNotExists(path, msg) {
-  msg = msg || "Does not expect path '" + path + "' to exist.";
+  msg = msg || 'Does not expect path `' + path + '` to exist.';
   Assert.ok(!Fs.existsSync(path), msg);
 };
