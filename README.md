@@ -1,10 +1,21 @@
 fs-tools
 ========
+
 [![Build Status](https://secure.travis-ci.org/nodeca/fs-tools.png)](http://travis-ci.org/nodeca/fs-tools)
 
-Useful file utitiles. See [API Documentation](http://nodeca.github.com/fs-tools/#FsTools) for detailed info.
+> Some file utitiles. See [API Documentation](http://nodeca.github.com/fs-tools/#FsTools) for detailed info.
 
----
+___This project is not mantained anymore, because no longer
+actual and better alternatives available___.
+
+Consider use another packages:
+
+- [shelljs](https://www.npmjs.com/package/shelljs)
+- [glob](https://www.npmjs.com/package/glob)
+- [mkdirp](https://www.npmjs.com/package/mkdirp)
+- [rimraf](https://www.npmjs.com/package/rimraf)
+
+--------------------------------------------------------------------------------
 
 ### walk(path, [pattern,] iterator[, callback])
 
@@ -57,4 +68,4 @@ Returns unique directory (at the moment of request) pathname.
 
 ## License
 
-View the [LICENSE](https://github.com/nodeca/fs-tools/blob/master/LICENSE) file (MIT).
+[MIT](https://github.com/nodeca/fs-tools/blob/master/LICENSE)
