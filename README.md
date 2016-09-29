@@ -52,7 +52,7 @@ Move file.
 
 ### tmpdir([template])
 
-Returns unique directory (at the moment of request) pathbname.
+Returns unique directory (at the moment of request) pathname.
 
 
 ## License
