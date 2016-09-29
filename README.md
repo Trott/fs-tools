@@ -5,8 +5,7 @@ fs-tools
 
 > Some file utitiles. See [API Documentation](http://nodeca.github.com/fs-tools/#FsTools) for detailed info.
 
-___This project is not mantained anymore, because no longer
-actual and better alternatives available___.
+___This project is not maintained anymore, because not actual and better alternatives available___.
 
 Consider use another packages:
 

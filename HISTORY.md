@@ -1,3 +1,10 @@
+0.3.0 / 2016-09-29
+------------------
+
+- Added notice that project is not maintained as not actual.
+- Removed testing in node 0.8, added testing in node 0.12, 4, 6.
+
+
 0.2.11 / 2014-01-08
 -------------------
 
@@ -82,4 +89,3 @@
 ------------------
 
 - First public release
-
