@@ -16,8 +16,8 @@
                       },
 
   "dependencies"    : {
-                        "async"           : "~ 0.2.9",
-                        "lodash"          : "~ 2.4.1"
+                        "async"           : "~ 2.5.0",
+                        "lodash"          : "~ 4.17.4"
                       },
   "devDependencies" : { "vows" : "*" }
 }
