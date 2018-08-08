@@ -7,13 +7,14 @@
     "file",
     "utils"
   ],
-  "homepage": "https://github.com/nodeca/fs-tools",
+  "homepage": "https://github.com/Trott/fs-tools",
   "author": "Aleksey V Zapparov <ixti@member.fsf.org> (http://www.ixti.net/)",
   "contributors": [
-    "Vladimir Dronnikov <dronnikov@gmail.com>"
+    "Vladimir Dronnikov <dronnikov@gmail.com>",
+    "Rich Trott <rtrott@gmail.com>"
   ],
   "license": "MIT",
-  "repository": "nodeca/fs-tools",
+  "repository": "Trott/fs-tools",
   "scripts": {
     "test": "make test"
   },
