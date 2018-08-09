@@ -23,6 +23,8 @@
     "lodash": "~ 2.4.1"
   },
   "devDependencies": {
+    "jshint": "^2.9.6",
+    "ndoc": "^5.0.1",
     "vows": "*"
   }
 }
