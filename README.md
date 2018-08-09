@@ -3,11 +3,11 @@ fs-tools
 
 [![Build Status](https://secure.travis-ci.org/Trott/fs-tools.png)](http://travis-ci.org/Trott/fs-tools)
 
-> Some file utitiles. See [API Documentation](http://trott.github.com/fs-tools/#FsTools) for detailed info.
+> Some file utilities. See [API Documentation](http://trott.github.com/fs-tools/#FsTools) for detailed info.
 
 ___This project is not maintained anymore because now actual and better alternatives are available___.
 
-Consider using another packages:
+Consider using another package:
 
 - [shelljs](https://www.npmjs.com/package/shelljs)
 - [glob](https://www.npmjs.com/package/glob)
