@@ -23,7 +23,7 @@ help:
 
 
 lint:
-	./node_modules/.bin/jshint . --show-non-errors
+	jshint . --show-non-errors
 
 test: lint
 	rm -rf ./tmp/sandbox && mkdir -p ./tmp/sandbox
@@ -36,11 +36,11 @@ test: lint
 	cp -r ./support/sandbox-template ./tmp/sandbox/walk-sync
 	cp -r ./support/sandbox-template ./tmp/sandbox/move
 	cp -r ./support/sandbox-template ./tmp/sandbox/find-sorted
-	NODE_ENV=test ./node_modules/.bin/vows --spec
+	NODE_ENV=test vows --spec
 
 doc:
 	rm -rf ./doc
-	./node_modules/.bin/ndoc --link-format "{package.homepage}/blob/${CURR_HEAD}/{file}#L{line}"
+	ndoc --link-format "{package.homepage}/blob/${CURR_HEAD}/{file}#L{line}"
 
 gh-pages:
 	@if test -z ${REMOTE_REPO} ; then \
