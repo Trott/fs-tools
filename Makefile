@@ -9,7 +9,7 @@ REMOTE_NAME ?= origin
 REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
 CURR_HEAD   := $(firstword $(shell git show-ref --hash HEAD | cut --bytes=-6) master)
-GITHUB_PROJ := nodeca/${NPM_PACKAGE}
+GITHUB_PROJ := trott/${NPM_PACKAGE}
 
 
 help:
@@ -17,26 +17,15 @@ help:
 	echo "make lint       - Lint sources with JSHint"
 	echo "make test       - Lint sources and run all tests"
 	echo "make doc        - Build API docs"
-	echo "make dev-deps   - Install developer dependencies"
 	echo "make gh-pages   - Build and push API docs into gh-pages branch"
 	echo "make publish    - Set new version tag and publish npm package"
 	echo "make todo       - Find and list all TODOs"
 
 
 lint:
-	if test ! `which jshint` ; then \
-		echo "You need 'jshint' installed in order to run lint." >&2 ; \
-		echo "  $ make dev-deps" >&2 ; \
-		exit 128 ; \
-		fi
-	jshint . --show-non-errors
+	./node_modules/.bin/jshint . --show-non-errors
 
 test: lint
-	@if test ! `which vows` ; then \
-		echo "You need 'vows' installed in order to run tests." >&2 ; \
-		echo "  $ make dev-deps" >&2 ; \
-		exit 128 ; \
-		fi
 	rm -rf ./tmp/sandbox && mkdir -p ./tmp/sandbox
 	cp -r ./support/sandbox-template ./tmp/sandbox/copy
 	cp -r ./support/sandbox-template ./tmp/sandbox/mkdir
@@ -47,27 +36,11 @@ test: lint
 	cp -r ./support/sandbox-template ./tmp/sandbox/walk-sync
 	cp -r ./support/sandbox-template ./tmp/sandbox/move
 	cp -r ./support/sandbox-template ./tmp/sandbox/find-sorted
-	NODE_ENV=test vows --spec
+	NODE_ENV=test ./node_modules/.bin/vows --spec
 
 doc:
-	@if test ! `which ndoc` ; then \
-		echo "You need 'ndoc' installed in order to generate docs." >&2 ; \
-		echo "  $ npm install -g ndoc" >&2 ; \
-		exit 128 ; \
-		fi
 	rm -rf ./doc
-	ndoc --link-format "{package.homepage}/blob/${CURR_HEAD}/{file}#L{line}"
-
-
-dev-deps:
-	@if test ! `which npm` ; then \
-		echo "You need 'npm' installed." >&2 ; \
-		echo "  See: http://npmjs.org/" >&2 ; \
-		exit 128 ; \
-		fi
-	npm install -g jshint
-	npm install
-
+	./node_modules/.bin/ndoc --link-format "{package.homepage}/blob/${CURR_HEAD}/{file}#L{line}"
 
 gh-pages:
 	@if test -z ${REMOTE_REPO} ; then \
@@ -108,5 +81,5 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-.PHONY: publish lint test doc dev-deps gh-pages todo
+.PHONY: publish lint test doc gh-pages todo
 .SILENT: help lint test doc todo
