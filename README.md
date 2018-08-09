@@ -1,13 +1,13 @@
 fs-tools
 ========
 
-[![Build Status](https://secure.travis-ci.org/nodeca/fs-tools.png)](http://travis-ci.org/nodeca/fs-tools)
+[![Build Status](https://secure.travis-ci.org/Trott/fs-tools.png)](http://travis-ci.org/Trott/fs-tools)
 
-> Some file utitiles. See [API Documentation](http://nodeca.github.com/fs-tools/#FsTools) for detailed info.
+> Some file utitiles. See [API Documentation](http://trott.github.com/fs-tools/#FsTools) for detailed info.
 
-___This project is not maintained anymore, because not actual and better alternatives available___.
+___This project is not maintained anymore because now actual and better alternatives are available___.
 
-Consider use another packages:
+Consider using another packages:
 
 - [shelljs](https://www.npmjs.com/package/shelljs)
 - [glob](https://www.npmjs.com/package/glob)
@@ -18,7 +18,7 @@ Consider use another packages:
 
 ### walk(path, [pattern,] iterator[, callback])
 
-Recurcively scan files by regex pattern & apply iterator to each. Iterator
+Recursively scan files by regex pattern & apply iterator to each. Iterator
 applied only to files, not to directories. If given path is a file, iterator
 will be called against it (if pattern allows it).
 
@@ -67,4 +67,4 @@ Returns unique directory (at the moment of request) pathname.
 
 ## License
 
-[MIT](https://github.com/nodeca/fs-tools/blob/master/LICENSE)
+[MIT](https://github.com/Trott/fs-tools/blob/master/LICENSE)
