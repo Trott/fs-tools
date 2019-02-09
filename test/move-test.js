@@ -43,7 +43,8 @@ require('vows').describe('move()').addBatch({
       topic: function () {
         var callback = this.callback, find;
 
-        find = 'find ' + SANDBOX + ' -mindepth 1 -printf %y';
+        find = 'command gfind ' + SANDBOX + ' -mindepth 1 -printf %y || ' +
+               'command find ' + SANDBOX + ' -mindepth 1 -printf %y';
 
         require('child_process').exec(find, function (err, stdout) {
           callback(err, {

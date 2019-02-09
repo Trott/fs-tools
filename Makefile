@@ -8,9 +8,11 @@ TMP_PATH    := /tmp/${NPM_PACKAGE}-$(shell date +%s)
 REMOTE_NAME ?= origin
 REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
-CURR_HEAD   := $(firstword $(shell git show-ref --hash HEAD | cut --bytes=-6) master)
+CUT         := command -v gcut || command -v cut
+CURR_HEAD   := $(firstword $(shell git show-ref --hash HEAD | ${CUT} --bytes=-6) master)
 GITHUB_PROJ := trott/${NPM_PACKAGE}
 
+CP          := command -v gcp || command -v cp
 
 help:
 	echo "make help       - Print this help"
@@ -23,19 +25,19 @@ help:
 
 
 lint:
-	jshint . --show-non-errors
+	npx jshint . --show-non-errors
 
 test: lint
 	rm -rf ./tmp/sandbox && mkdir -p ./tmp/sandbox
-	cp -r ./support/sandbox-template ./tmp/sandbox/copy
-	cp -r ./support/sandbox-template ./tmp/sandbox/mkdir
-	cp -r ./support/sandbox-template ./tmp/sandbox/mkdir-sync
-	cp -r ./support/sandbox-template ./tmp/sandbox/remove
-	cp -r ./support/sandbox-template ./tmp/sandbox/remove-sync
-	cp -r ./support/sandbox-template ./tmp/sandbox/walk
-	cp -r ./support/sandbox-template ./tmp/sandbox/walk-sync
-	cp -r ./support/sandbox-template ./tmp/sandbox/move
-	cp -r ./support/sandbox-template ./tmp/sandbox/find-sorted
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/copy
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/mkdir
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/mkdir-sync
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/remove
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/remove-sync
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/walk
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/walk-sync
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/move
+	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/find-sorted
 	NODE_ENV=test vows --spec
 
 doc:
@@ -48,7 +50,7 @@ gh-pages:
 		exit 128 ; \
 		fi
 	$(MAKE) doc && \
-		cp -r ./doc ${TMP_PATH} && \
+		${CP} -r ./doc ${TMP_PATH} && \
 		touch ${TMP_PATH}/.nojekyll
 	cd ${TMP_PATH} && \
 		git init && \
