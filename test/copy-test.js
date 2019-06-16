@@ -3,86 +3,49 @@
 
 var FsTools = require('../');
 var Helper = require('./helper');
-var Assert = require('assert');
 var Fs = require('fs');
+
+var test = require('tape');
 
 var SANDBOX = Helper.SANDBOX_DIR + '/copy';
 
-require('vows').describe('copy()').addBatch({
-  'copying foo to fuu': {
-    topic: function () {
-      var callback = this.callback;
+test('copying foo to fuu', function (t) {
+  t.plan(10);
+  var dst = SANDBOX + '/fuu';
+  FsTools.copy(SANDBOX + '/foo', dst, function (err) {
+    t.ok(!err, 'Has no error');
+    t.ok(Fs.statSync(dst).isDirectory());
+    t.ok(Fs.statSync(dst + '/bar/baz/file').isFile());
+    t.ok(Fs.lstatSync(dst + '/bar/baz/link').isSymbolicLink());
+    t.ok(Fs.statSync(dst + '/bar/baz/link').isDirectory());
+    var find = 'command gfind ' + SANDBOX + ' -mindepth 1 -printf %y || ' +
+            'command find ' + SANDBOX + ' -mindepth 1 -printf %y';
 
-      FsTools.copy(SANDBOX + '/foo', SANDBOX + '/fuu', function (err) {
-        callback(err, SANDBOX + '/fuu');
-      });
-    },
-    'should just work': function (err, dst) {
-      dst = dst; // ugly workaround for jshint + vows
-      Assert.ok(!err, 'Has no errror');
-    },
-    'creates directory fuu': function (err, dst) {
-      Assert.isDirectory(Fs.statSync(dst));
-    },
-    'creates file fuu/bar/baz/file': function (err, dst) {
-      Assert.isFile(Fs.statSync(dst + '/bar/baz/file'));
-    },
-    'creates symlink fuu/bar/baz/link': function (err, dst) {
-      Assert.isSymbolicLink(Fs.lstatSync(dst + '/bar/baz/link'));
-    },
-    'creates symlink fuu/bar/baz/link pointing to directory': function (err, dst) {
-      Assert.isDirectory(Fs.statSync(dst + '/bar/baz/link'));
-    },
-    'after all': {
-      topic: function () {
-        var callback = this.callback, find;
+    require('child_process').exec(find, function (err, stdout) {
+      t.ok(!err, 'Has no error');
+      t.equal(stdout.length, 20);
+      t.equal(stdout.match(/f/g).length, 7);
+      t.equal(stdout.match(/d/g).length, 6);
+      t.equal(stdout.match(/l/g).length, 7);
+    });
+  });
+});
 
-        find = 'command gfind ' + SANDBOX + ' -mindepth 1 -printf %y || ' +
-               'command find ' + SANDBOX + ' -mindepth 1 -printf %y';
 
-        require('child_process').exec(find, function (err, stdout) {
-          callback(err, {
-            total: stdout.length,
-            files: stdout.match(/f/g).length,
-            dirs: stdout.match(/d/g).length,
-            syms: stdout.match(/l/g).length
-          });
-        });
-      },
-      'makes exact copy of src': function (err, result) {
-        Assert.ok(!err, 'Has no error');
-        Assert.equal(result.total, 20);
-        Assert.equal(result.files, 7);
-        Assert.equal(result.dirs, 6);
-        Assert.equal(result.syms, 7);
-      },
-    },
-  }
-}).addBatch({
-  'When copying to existing file/dir': {
-    topic: function () {
-      FsTools.copy(SANDBOX + '/fuu/bar', SANDBOX + '/foo', this.callback);
-    },
+test('When copying to existing file/dir', function (t) {
+  t.plan(4);
+  FsTools.copy(SANDBOX + '/fuu/bar', SANDBOX + '/foo', function (err) {
+    var dst, src, result, expected, message;
 
-    'files are overwriten': function (err) {
-      var dst, src, result, expected, message;
+    dst       = SANDBOX + '/foo/file';
+    src       = SANDBOX + '/fuu/bar/file';
+    result    = Fs.readFileSync(dst, 'utf8');
+    expected  = Fs.readFileSync(src, 'utf8');
+    message   = 'Expected file `' + dst + '` to be same as `' + src + '`.';
 
-      dst       = SANDBOX + '/foo/file';
-      src       = SANDBOX + '/fuu/bar/file';
-      result    = Fs.readFileSync(dst, 'utf8');
-      expected  = Fs.readFileSync(src, 'utf8');
-      message   = 'Expected file `' + dst + '` to be same as `' + src + '`.';
-
-      Assert.ok(!err, 'Has no error');
-      Assert.equal(result, expected, message);
-    },
-
-    'links are overwriten': 'TBD',
-
-    'directories are merged': function (err) {
-      err = err; // ugly workaround for jshint + vows
-      Assert.pathExists(SANDBOX + '/foo/baz');
-      Assert.isDirectory(Fs.statSync(SANDBOX + '/foo/baz'));
-    }
-  }
-}).export(module);
+    t.ok(!err, 'Has no error');
+    t.equal(result, expected, message);
+    t.ok(Fs.existsSync(SANDBOX + '/foo/baz'));
+    t.ok(Fs.statSync(SANDBOX + '/foo/baz').isDirectory());
+  });
+});

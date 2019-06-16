@@ -38,7 +38,7 @@ test: lint
 	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/walk-sync
 	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/move
 	$(shell ${CP}) -r ./support/sandbox-template ./tmp/sandbox/find-sorted
-	NODE_ENV=test vows --spec
+	npx tape ./test/*-test.js
 
 doc:
 	rm -rf ./doc

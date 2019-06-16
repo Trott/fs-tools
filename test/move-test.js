@@ -3,92 +3,53 @@
 
 var FsTools = require('../');
 var Helper = require('./helper');
-var Assert = require('assert');
 var Fs = require('fs');
 
+var test = require('tape');
 
 var SANDBOX = Helper.SANDBOX_DIR + '/move';
 
 
-require('vows').describe('move()').addBatch({
-  'moving foo to fuu': {
-    topic: function () {
-      var callback = this.callback;
+test('moving foo to fuu', function (t) {
+  t.plan(11);
+  var dst = SANDBOX + '/fuu';
+  FsTools.move(SANDBOX + '/foo', dst, function (err) {
+    t.ok(!err, 'Has no errror');
+    t.ok(Fs.statSync(dst).isDirectory());
+    t.ok(Fs.statSync(dst + '/bar/baz/file').isFile());
+    t.ok(Fs.lstatSync(dst + '/bar/baz/link').isSymbolicLink());
+    t.ok(Fs.statSync(dst + '/bar/baz/link').isDirectory());
+    t.ok(!Fs.existsSync(SANDBOX + '/foo'));
+    
+    var find = 'command gfind ' + SANDBOX + ' -mindepth 1 -printf %y || ' +
+                'command find ' + SANDBOX + ' -mindepth 1 -printf %y';
 
-      FsTools.move(SANDBOX + '/foo', SANDBOX + '/fuu', function (err) {
-        callback(err, SANDBOX + '/fuu');
-      });
-    },
-    'should just work': function (err, dst) {
-      dst = dst; // ugly workaround for jshint + vows
-      Assert.ok(!err, 'Has no errror');
-    },
-    'creates directory fuu': function (err, dst) {
-      Assert.isDirectory(Fs.statSync(dst));
-    },
-    'creates file fuu/bar/baz/file': function (err, dst) {
-      Assert.isFile(Fs.statSync(dst + '/bar/baz/file'));
-    },
-    'creates symlink fuu/bar/baz/link': function (err, dst) {
-      Assert.isSymbolicLink(Fs.lstatSync(dst + '/bar/baz/link'));
-    },
-    'creates symlink fuu/bar/baz/link pointing to directory': function (err, dst) {
-      Assert.isDirectory(Fs.statSync(dst + '/bar/baz/link'));
-    },
-    'removes foo': function (err, dst) {
-      dst = dst; // ugly workaround for jshint + vows
-      Assert.pathNotExists(SANDBOX + '/foo');
-    },
-    'after all': {
-      topic: function () {
-        var callback = this.callback, find;
+    require('child_process').exec(find, function (err, stdout) {
+      t.ok(!err, 'Has no error');
+      t.equal(stdout.length, 11);
+      t.equal(stdout.match(/f/g).length, 4);
+      t.equal(stdout.match(/d/g).length, 3);
+      t.equal(stdout.match(/l/g).length, 4);
+    });
+  });
+});
 
-        find = 'command gfind ' + SANDBOX + ' -mindepth 1 -printf %y || ' +
-               'command find ' + SANDBOX + ' -mindepth 1 -printf %y';
 
-        require('child_process').exec(find, function (err, stdout) {
-          callback(err, {
-            total: stdout.length,
-            files: stdout.match(/f/g).length,
-            dirs: stdout.match(/d/g).length,
-            syms: stdout.match(/l/g).length
-          });
-        });
-      },
-      'fuu has exactly same structure': function (err, result) {
-        Assert.ok(!err, 'Has no error');
-        Assert.equal(result.total, 11);
-        Assert.equal(result.files, 4);
-        Assert.equal(result.dirs, 3);
-        Assert.equal(result.syms, 4);
-      },
-    },
-  }
-}).addBatch({
-  'When moving to existing file/dir': {
-    topic: function () {
-      FsTools.copy(SANDBOX + '/fuu/bar', SANDBOX + '/foo', this.callback);
-    },
+test('When moving to existing file/dir', function (t) {
+  t.plan(4);
+  FsTools.copy(SANDBOX + '/fuu/bar', SANDBOX + '/foo', function (err) {
+    var dst, src, result, expected, message;
 
-    'files are overwriten': function (err) {
-      var dst, src, result, expected, message;
+    dst       = SANDBOX + '/foo/file';
+    src       = SANDBOX + '/fuu/bar/file';
+    result    = Fs.readFileSync(dst, 'utf8');
+    expected  = Fs.readFileSync(src, 'utf8');
+    message   = 'Expected file `' + dst + '` to be same as `' + src + '`.';
 
-      dst       = SANDBOX + '/foo/file';
-      src       = SANDBOX + '/fuu/bar/file';
-      result    = Fs.readFileSync(dst, 'utf8');
-      expected  = Fs.readFileSync(src, 'utf8');
-      message   = 'Expected file `' + dst + '` to be same as `' + src + '`.';
+    t.ok(!err, 'Has no error');
+    t.equal(result, expected, message);
 
-      Assert.ok(!err, 'Has no error');
-      Assert.equal(result, expected, message);
-    },
-
-    'links are overwriten': 'TBD',
-
-    'directories are merged': function (err) {
-      err = err; // ugly workaround for jshint + vows
-      Assert.pathExists(SANDBOX + '/foo/baz');
-      Assert.isDirectory(Fs.statSync(SANDBOX + '/foo/baz'));
-    }
-  }
-}).export(module);
+    t.ok(Fs.existsSync(SANDBOX + '/foo/baz'));
+    t.ok(Fs.statSync(SANDBOX + '/foo/baz').isDirectory());
+  });
+});

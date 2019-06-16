@@ -25,6 +25,6 @@
   "devDependencies": {
     "jshint": "^2.9.6",
     "ndoc": "^5.0.1",
-    "vows": "*"
+    "tape": "^4.10.2"
   }
 }

@@ -2,37 +2,26 @@
 
 
 var FsTools = require('../');
-var Assert = require('assert');
 
-require('vows').describe('tmpdir()').addBatch({
-  'each time': {
-    topic: [ FsTools.tmpdir(), FsTools.tmpdir() ],
-    'returns random string': function (result) {
-      var a = result.shift(), b = result.shift();
+var test = require('tape');
 
-      Assert.isString(a);
-      Assert.isString(b);
-      Assert.notEqual(a, b);
-    }
-  },
+test('returns different string each time', function (t) {
+  t.plan(3);
+  var a = FsTools.tmpdir();
+  var b = FsTools.tmpdir();
+  t.equal(typeof a, 'string');
+  t.equal(typeof b, 'string');
+  t.notEqual(a, b);
+});
 
-  'with invalid template': {
-    'throws an error': function () {
-      Assert.throws(function () {
-        FsTools.tmpdir('/foo');
-      });
-    }
-  },
-
-  'with valid template': {
-    topic: FsTools.tmpdir('/XXXXXXXXX-XXXX'),
-    'Respects length of template': function (result) {
-      Assert.equal(15, result.length);
-    },
-    'respects only first XXX... group': function (result) {
-      Assert.match(result, /^\/.{9}-XXXX$/);
-    }
-  },
-
-
-}).export(module);
+test('throws an error with invalid template', function (t) {
+  t.plan(1);
+  t.throws(function () { FsTools.tmprdir('/foo'); });
+});
+  
+test('with valid template', function (t) {
+  t.plan(2);
+  var result = FsTools.tmpdir('/XXXXXXXXX-XXXX');
+  t.equal(result.length, 15);
+  t.ok(/^\/.{9}-XXXX$/.test(result));
+});

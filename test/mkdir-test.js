@@ -3,38 +3,30 @@
 
 var FsTools = require('../');
 var Helper = require('./helper');
-var Assert = require('assert');
 var Fs = require('fs');
+
+var test = require('tape');
 
 var SANDBOX = Helper.SANDBOX_DIR + '/mkdir';
 
-require('vows').describe('mkdir()').addBatch({
-  'when destination can be created': {
-    topic: function () {
-      var callback = this.callback, path = SANDBOX + '/test';
+test('when destination can be created', function (t) {
+  t.plan(3);
+  var path = SANDBOX + '/test';
 
-      FsTools.mkdir(path, '0711', function (err) {
-        callback(err, path);
-      });
-    },
-    'should create directory with requested permissions': function (err, path) {
-      Assert.ok(!err, 'Has no errror');
+  FsTools.mkdir(path, '0711', function (err) {
+    t.ok(!err, 'Has no errror');
 
-      var stats = Fs.statSync(path);
+    var stats = Fs.statSync(path);
 
-      Assert.isDirectory(stats);
-      Assert.hasPermsMode(stats, '0711');
-    }
-  },
-  'when can not create directory, due to permissions of parent': {
-    topic: function () {
-      // TODO: Add chek if current user is root, and if so - skip test
-      FsTools.mkdir('/FOOBAR-FS-TOOLS', this.callback);
-    },
-    'can\'t create under /etc': function (err, result) {
-      result = result; // ugly workaround for jshint + vows
-      Assert.instanceOf(err, Error);
-      Assert.equal(err.code, 'EACCES');
-    }
-  }
-}).export(module);
+    t.ok(stats.isDirectory());
+    t.equal(stats.mode.toString(8).slice(-4), '0711');
+  });
+});
+
+test('when can not create directory, due to permissions of parent', function (t) {
+  t.plan(2);
+  FsTools.mkdir('/FOOBAR-FS-TOOLS', function(err) {
+    t.ok(err instanceof Error);
+    t.equal(err.code, 'EACCES');
+  });
+});
